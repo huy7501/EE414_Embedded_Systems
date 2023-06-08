@@ -635,7 +635,7 @@ static void conn_params_init(void)
     cp_init.first_conn_params_update_delay = FIRST_CONN_PARAMS_UPDATE_DELAY;
     cp_init.next_conn_params_update_delay  = NEXT_CONN_PARAMS_UPDATE_DELAY;
     cp_init.max_conn_params_update_count   = MAX_CONN_PARAMS_UPDATE_COUNT;
-    cp_init.start_on_notify_cccd_handle    = BLE_GATT_HANDLE_INVALID;
+    cp_init.start_on_notify_cccd_handle    = BLE_GATT_HANDLE_START;
     cp_init.disconnect_on_fail             = true;
     cp_init.evt_handler                    = NULL;
     cp_init.error_handler                  = conn_params_error_handler;
@@ -718,6 +718,13 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
     {
         case BLE_GAP_EVT_DISCONNECTED:
             NRF_LOG_INFO("Disconnected.");
+            m_new_alert_state = ALERT_NOTIFICATION_DISABLED;
+            err_code          = ble_ans_c_disable_notif_new_alert(&m_ans_c);
+            NRF_LOG_INFO("New Alert State: Disabled.");
+
+            m_unread_alert_state = ALERT_NOTIFICATION_DISABLED;
+            err_code             = ble_ans_c_disable_notif_unread_alert(&m_ans_c);
+            NRF_LOG_INFO("Unread Alert State: Disabled.");
             // LED indication will be changed when advertising starts.
             break;
 
@@ -730,6 +737,13 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             err_code = nrf_ble_qwr_conn_handle_assign(&m_qwr, m_cur_conn_handle);
             APP_ERROR_CHECK(err_code);
+            m_new_alert_state = ALERT_NOTIFICATION_ENABLED;
+            err_code          = ble_ans_c_enable_notif_new_alert(&m_ans_c);
+            NRF_LOG_INFO("New Alert State: Enabled.");
+
+            m_unread_alert_state = ALERT_NOTIFICATION_ENABLED;
+            err_code             = ble_ans_c_enable_notif_unread_alert(&m_ans_c);
+            NRF_LOG_INFO("Unread Alert State: Enabled.");
             break;
 
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
@@ -1001,7 +1015,7 @@ static void advertising_start(bool erase_bonds)
  */
 int main(void)
 {
-    bool erase_bonds;
+    bool erase_bonds = true;
 
     // Initialize.
     log_init();

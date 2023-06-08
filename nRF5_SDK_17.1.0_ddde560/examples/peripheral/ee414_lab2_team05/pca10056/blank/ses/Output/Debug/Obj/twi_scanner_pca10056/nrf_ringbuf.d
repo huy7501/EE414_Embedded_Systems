@@ -1,6 +1,6 @@
 Output/Debug/Obj/twi_scanner_pca10056/nrf_ringbuf.o: \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\ringbuf\nrf_ringbuf.c \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\ringbuf\nrf_ringbuf.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\ringbuf\nrf_ringbuf.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\ringbuf\nrf_ringbuf.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL_ConfDefaults.h \

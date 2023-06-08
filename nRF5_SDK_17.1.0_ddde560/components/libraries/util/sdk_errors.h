@@ -82,6 +82,7 @@ extern "C" {
  */
 #define NRF_ERROR_SDK_ERROR_BASE         (NRF_ERROR_BASE_NUM + 0x8000)   /**< Base value defined for SDK module identifiers. */
 #define NRF_ERROR_SDK_COMMON_ERROR_BASE  (NRF_ERROR_BASE_NUM + 0x0080)   /**< Base error value to be used for SDK error values. */
+#define NRF_ERROR_RESOURCES   (NRF_ERROR_BASE_NUM + 19)
 /** @} */
 
 /**

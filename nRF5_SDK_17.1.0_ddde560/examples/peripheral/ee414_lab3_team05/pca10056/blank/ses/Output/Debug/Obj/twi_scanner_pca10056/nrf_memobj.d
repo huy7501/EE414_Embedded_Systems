@@ -1,6 +1,6 @@
 Output/Debug/Obj/twi_scanner_pca10056/nrf_memobj.o: \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\memobj\nrf_memobj.c \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\memobj\nrf_memobj.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\memobj\nrf_memobj.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\memobj\nrf_memobj.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL_ConfDefaults.h \

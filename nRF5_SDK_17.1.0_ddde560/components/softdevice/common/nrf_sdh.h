@@ -58,6 +58,8 @@
 extern "C" {
 #endif
 
+
+//#define ANT_LICENSE_KEY "1234-1234-5678-225f-a00e-225f-225f-225f"
 /**
  * @name Softdevice Handler dispatch models
  * @{

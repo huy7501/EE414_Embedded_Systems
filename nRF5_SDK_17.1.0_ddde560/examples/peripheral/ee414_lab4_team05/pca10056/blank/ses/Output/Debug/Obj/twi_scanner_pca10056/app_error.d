@@ -1,5 +1,5 @@
 Output/Debug/Obj/twi_scanner_pca10056/app_error.o: \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error.c \
  ../../../../../../modules/nrfx/mdk/nrf.h \
  ../../../../../../modules/nrfx/mdk/nrf52840.h \
  ../../../../../../components/toolchain/cmsis/include/core_cm4.h \
@@ -18,9 +18,9 @@ Output/Debug/Obj/twi_scanner_pca10056/app_error.o: \
  ../../../../../../modules/nrfx/mdk/nrf52_to_nrf52840.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdio.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdbool.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\util\sdk_errors.h \
- ../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_error.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\util\nordic_common.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error_weak.h
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\sdk_errors.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_error.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\nordic_common.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error_weak.h

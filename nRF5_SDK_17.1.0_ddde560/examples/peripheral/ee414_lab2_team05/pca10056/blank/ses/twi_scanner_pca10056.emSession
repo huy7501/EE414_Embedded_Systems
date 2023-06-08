@@ -3,6 +3,7 @@
  <Bookmarks/>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
   <BreakpointListItem trigger="" line="166" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="4" filename="../../../../../../components/libraries/twi_sensor/nrf_twi_sensor.c" useHWbreakpoint="false"/>
+  <Exceptions set="MemManage;UsageFault_Coprocessor;UsageFault_CheckingError;UsageFault_StateError;BusFault;ExceptionEntryReturnFault;HardFault"/>
  </Breakpoints>
  <ExecutionProfileWindow/>
  <FrameBufferWindow>
@@ -28,6 +29,7 @@
   <ProjectSessionItem path="twi_scanner_pca10056;twi_scanner_pca10056;None"/>
   <ProjectSessionItem path="twi_scanner_pca10056;twi_scanner_pca10056;nRF_Drivers"/>
   <ProjectSessionItem path="twi_scanner_pca10056;twi_scanner_pca10056;nRF_Libraries"/>
+  <ProjectSessionItem path="twi_scanner_pca10056;twi_scanner_pca10056;nRF_Segger_RTT"/>
   <ProjectSessionItem path="twi_scanner_pca10056;twi_scanner_pca10056;Segger Startup Files"/>
  </Project>
  <Register1>
@@ -61,7 +63,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="27" y="420" useTextEdit="1" folds0="238" path="../../../main.c" left="0" selected="1" top="416" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="500" useTextEdit="1" folds0="336" path="../../../main.c" left="0" selected="1" top="415" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="39" y="21" useTextEdit="1" openedFrom="F:/KAIST 9th term/EE414 Embedded Systems/Lab1/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/pca10056/blank/ses/oled_display.c" path="oled_display.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="21" y="75" useTextEdit="1" openedFrom="C:/Textbooks/Sem5/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/main.c" path="oled_display.c" left="0" top="63" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="9" y="50" useTextEdit="1" openedFrom="C:/Textbooks/Sem5/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/main.c" path="../../../../../../components/libraries/twi_sensor/nrf_twi_sensor.h" left="0" top="27" codecName="Default"/>
@@ -73,6 +75,7 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="21" y="63" useTextEdit="1" openedFrom="C:/Textbooks/Sem5/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/main.c" path="../../../../../../components/libraries/delay/nrf_delay.h" left="0" top="40" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="9" y="45" useTextEdit="1" openedFrom="C:/Textbooks/Sem5/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/main.c" path="../../../../../../components/libraries/twi_mngr/nrf_twi_mngr.h" left="0" top="43" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="196" useTextEdit="1" openedFrom="C:/Textbooks/Sem5/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/pca10056/blank/ses/oled_display.c" path="../../../../../../components/libraries/twi_sensor/nrf_twi_sensor.c" left="0" top="186" codecName="Default"/>
+  <SessionOpenFile windowGroup="HUD {8ba58684-1824-4b2d-a78c-394ed5a2e4c3} Middle" x="47" y="181" useTextEdit="1" path="G:/Downloads/main (2).c" left="0" top="160" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="twi_scanner_pca10056" fileDialogDefaultFilter="*.asm;*.s;*.inc" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="C:/nRF5_SDK_17.1.0_ddde560/modules/nrfx/mdk/ses_startup_nrf52840.s&#xa;D:/Segger Embedded Studio/RF5_SDK/nRF5_SDK_17.1.0_ddde560/examples/peripheral/twi_scanner/pca10056/blank/ses/Output/Debug/Obj/twi_scanner_pca10056/nrfx_twi.asm&#xa;C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 7.10a/source/thumb_crt0.s&#xa;D:/Segger Embedded Studio/RF5_SDK/nRF5_SDK_17.1.0_ddde560/examples/peripheral/twi_scanner/pca10056/blank/ses/Output/Debug/Obj/twi_scanner_pca10056/nrfx_twi.asm&#xa;F:/KAIST 9th term/EE414 Embedded Systems/Lab1/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/pca10056/blank/ses/oled_display.c&#xa;C:/Textbooks/Sem5/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/pca10056/blank/ses/oled_display.c" fileDialogInitialDirectory="C:/Textbooks/Sem5/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/pca10056/blank/ses" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

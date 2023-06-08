@@ -73,11 +73,18 @@
 #define TWI_ADDRESSES 127
 #define PIN_VDD_ENV 22  // 0<<5||22 for P0.22
 #define PIN_R_PULLUP 32 // 1<<5||0 for P1.0
-
+#define LSM_ADDR            0x6B
+#define ACC_CTRL            0x20
+#define BUF_SIZE            20
+#define threshold           5.5
+#define LSM_STATUS          0x17
 /* TWI instance. */
+static float acc_x[BUF_SIZE] = {0};
+static float acc_y[BUF_SIZE] = {0};
+static float acc_z[BUF_SIZE] = {0};
 
 static volatile bool m_xfer_done = false;
-
+static float xavg, yavg, zavg;
 static const nrf_drv_twi_t m_twi = NRF_DRV_TWI_INSTANCE(TWI_INSTANCE_ID);
 NRF_TWI_MNGR_DEF(m_twi_oled_mngr, 5, 1);
 NRF_TWI_SENSOR_DEF(m_twi_oled, &m_twi_oled_mngr, 128);
@@ -162,6 +169,53 @@ void twi_init_oled(void) {
  * data -> Buffer which holds data to be written
  * length -> Length of data to be written
  */
+int8_t LSM_WRITE(uint8_t reg_addr, uint8_t *data, uint16_t length)
+{
+  /* Write the data to APDS-9960 sensor by I2C protocol
+   * reg_addr -> Register address
+   * data -> Buffer where data read from TWI will be stored
+   * length -> Length of data to be write
+   */
+    uint32_t err_code;
+    uint8_t buffer[255] = {0};
+    buffer[0] = reg_addr;
+    memcpy(&buffer[1], data, length);
+    m_xfer_done = false;
+    err_code = nrf_drv_twi_tx(&m_twi, LSM_ADDR, buffer, length + 1, false);
+    APP_ERROR_CHECK(err_code);
+    while (m_xfer_done == false);
+
+   return err_code;
+}
+
+
+int8_t LSM_READ(uint8_t reg_addr, uint8_t *data, uint16_t length)
+{
+  /* Read the data in APDS-9960 sensor by I2C protocol
+   * reg_addr -> Register address
+   * data -> Buffer where data read from TWI will be stored
+   * length -> Length of data to be read
+   */
+    uint32_t err_code;
+    m_xfer_done = false;
+    err_code = nrf_drv_twi_tx(&m_twi, LSM_ADDR, &reg_addr, 1, true);
+    APP_ERROR_CHECK(err_code);
+    while (m_xfer_done == false);
+
+    m_xfer_done = false;
+    err_code = nrf_drv_twi_rx(&m_twi, LSM_ADDR, data, length);
+    APP_ERROR_CHECK(err_code);
+    while (m_xfer_done == false);
+
+    return err_code;
+
+}
+/*
+ * dev_addr -> Device address
+ * reg_adddr -> Register address
+ * data -> Buffer which holds data to be written
+ * length -> Length of data to be written
+ */
 int8_t APDS9960_WRITE(uint8_t reg_addr, uint8_t *data, uint16_t length)
 {
   /* Write the data to APDS-9960 sensor by I2C protocol
@@ -203,7 +257,51 @@ int8_t APDS9960_READ(uint8_t reg_addr, uint8_t *data, uint16_t length)
     return err_code;
 
 }
+void LSM_INIT(){
+  uint8_t r;
+  r = 0b01110000;
+  LSM_WRITE(ACC_CTRL, &r, 1);
+}
 
+/* Check if accelerometer sensor is available to read or not */
+bool accelerationAvailable(){
+  uint8_t r;
+  LSM_READ(LSM_STATUS, &r, 1);
+  if(r & 0b00000101){
+    return true;
+  }
+  NRF_LOG_INFO("Acceleration sensor not available!");
+  NRF_LOG_FLUSH();
+  return false;
+}
+
+static void read_acc_data(float *x_sample, float *y_sample, float *z_sample)
+{
+  uint8_t acc_data[6];
+  if (accelerationAvailable()){
+    for (int i = 0; i < 6; i++){
+      LSM_READ(0x28 + i, &acc_data[i], 1);
+    }
+  }
+  int x = (acc_data[1] * 256) + acc_data[0];
+  int y = (acc_data[3] * 256) + acc_data[2];
+  int z = (acc_data[5] * 256) + acc_data[4];
+  if(x > 32767)
+  {
+          x -= 65536;
+  }
+  if(y > 32767)
+  {
+          y -= 65536;
+  }
+  if(z > 32767)
+  {
+          z -= 65536;
+  }
+  *x_sample = x * 4.0 / 32768.0;
+  *y_sample = y * 4.0 / 32768.0;
+  *z_sample = z * 4.0 / 32768.0;
+}
 bool getGSTATUS(uint8_t *r)
 {
       // Get the content from GSTATUS register
@@ -378,13 +476,29 @@ uint8_t gesture_init()
   return 0b00000001;
 }
 
-
+void acc_calibrate()
+{
+  float xsum = 0;
+  float ysum = 0;
+  float zsum = 0;
+  for (int i = 0; i < BUF_SIZE; i++)
+  {
+    read_acc_data(&acc_x[i], &acc_y[i], &acc_z[i]);
+    xsum += acc_x[i];
+    ysum += acc_y[i];
+    zsum += acc_z[i];
+  }
+  xavg = xsum / BUF_SIZE;
+  yavg = ysum / BUF_SIZE;
+  zavg = zsum / BUF_SIZE;
+}
 int main(void) {
   ret_code_t err_code;
   uint8_t address;
   uint8_t r;
   uint8_t sample_data;
   bool detected_device = false;
+  float x, y, z;
   nrf_gpio_pin_set(PIN_VDD_ENV);
   nrf_gpio_pin_set(PIN_R_PULLUP);
 
@@ -398,11 +512,10 @@ int main(void) {
   NRF_LOG_DEFAULT_BACKENDS_INIT();
 
   NRF_LOG_INFO("TWI scanner started.");
-  NRF_LOG_FLUSH();
   twi_init_sensor();
   twi_init_oled();
-  OLED_INIT(&m_twi_oled);
-  OLED_LOGO(&m_twi_oled);
+  // OLED_INIT(&m_twi_oled);
+  // OLED_LOGO(&m_twi_oled);
   /**********************************************/
   /* All the initialization should be done here */
   // Please read the lab document carefully!
@@ -410,8 +523,11 @@ int main(void) {
   bsp_board_leds_off();
   // Pulse length and pulse count init
   gesture_init();
-
+  LSM_INIT();
+  acc_calibrate();
+  x = y= z = 0;
   /**********************************************/
+  /*
   if (!_gestureEnabled) {      
     if (!enableGesture()) {
       NRF_LOG_INFO("Cannot enable the gesture sensor.");
@@ -432,29 +548,12 @@ int main(void) {
     r = ENABLE_GESTURE_START;
     err_code = APDS9960_WRITE(ENABLE, (uint8_t*) &r, 1);
     APP_ERROR_CHECK(err_code);
+    */
   while (true) {
     nrf_delay_ms(100);
-
-/*
-    // Set the Gesture sensing as FIFO
-    if (!_gestureEnabled){ enableGesture();}
-
-	// Set the Gesture sensing as FIFO
-    if (gestureFIFOAvailable() > 0) {
-*/  r = 0b00000000;
-
-
-    err_code = APDS9960_READ(PDATA, &sample_data, 1);
-    NRF_LOG_INFO("PDATA = %d", sample_data);
-    NRF_LOG_FLUSH();
-    
-    err_code = APDS9960_READ(ENABLE, &r, 1);
-    NRF_LOG_INFO("ENABLE = %x", r);
-    NRF_LOG_FLUSH();
-
-    err_code = APDS9960_READ(GCONF4, &r, 1);
-    NRF_LOG_INFO("GCONF4 = %x", r);
-    NRF_LOG_FLUSH();
+    read_acc_data(&x,&y, &z);
+    NRF_LOG_INFO("IMU - [mg]: "NRF_LOG_FLOAT_MARKER"",
+                  NRF_LOG_FLOAT(z));
   } 
   
 }

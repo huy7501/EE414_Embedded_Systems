@@ -467,13 +467,22 @@ static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
             err_code = ble_ias_c_handles_assign(&m_ias_c,
                                                 p_evt->conn_handle,
                                                 p_evt->alert_level.handle_value);
+            NRF_LOG_INFO("Immediate Alert Service is found on peer device.");
             APP_ERROR_CHECK(err_code);
 
             m_is_ias_present = true;
+            err_code =
+                ble_ias_c_send_alert_level(&m_ias_c, BLE_CHAR_ALERT_LEVEL_HIGH_ALERT);
+            APP_ERROR_CHECK(err_code);
+            m_is_mild_alert_signalled = false;
+            m_is_high_alert_signalled = true;
+            NRF_LOG_INFO("High Alert set.");
             break;
 
         case BLE_IAS_C_EVT_DISCOVERY_FAILED:
             // IAS is not found on peer. The Find Me Locator functionality of this app will NOT work.
+            NRF_LOG_INFO("Immediate Alert Service is not found on peer device.");
+            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_IAS_C_EVT_DISCONN_COMPLETE:
@@ -788,7 +797,7 @@ int main(void)
     services_init();
     conn_params_init();
     peer_manager_init();
-
+    erase_bonds = true;
     // Start execution.
     NRF_LOG_INFO("Immediate Alert example started.");
     advertising_start(erase_bonds);

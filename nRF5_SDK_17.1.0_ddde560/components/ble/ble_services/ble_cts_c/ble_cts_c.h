@@ -282,6 +282,10 @@ uint32_t ble_cts_c_handles_assign(ble_cts_c_t               * p_cts,
                                   const ble_cts_c_handles_t * p_peer_handles);
 
 
+
+
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,6 +1,6 @@
 Output/Debug/Obj/twi_scanner_pca10056/nrf_twi_sensor.o: \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\twi_sensor\nrf_twi_sensor.c \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\twi_sensor\nrf_twi_sensor.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\twi_sensor\nrf_twi_sensor.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\twi_sensor\nrf_twi_sensor.h \
  ../../../../../../components/libraries/twi_mngr/nrf_twi_mngr.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
@@ -35,18 +35,27 @@ Output/Debug/Obj/twi_scanner_pca10056/nrf_twi_sensor.o: \
  ../../../../../../components/libraries/util/app_util.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/nordic_common.h \
+ ../../../../../../components/softdevice/s140/headers/nrf52/nrf_mbr.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_svc.h \
  ../../../../../../components/libraries/util/nordic_common.h \
  ../../../../../../components/libraries/util/app_util_platform.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_soc.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_svc.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_error.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_error_soc.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_nvic.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
  ../../../../../../components/libraries/util/app_error.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdio.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
- ../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_error.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_error.h \
  ../../../../../../components/libraries/util/app_error_weak.h \
  ../../../../../../modules/nrfx/soc/nrfx_coredep.h \
  ../../../../../../modules/nrfx/soc/nrfx_atomic.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/libraries/util/sdk_resources.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_sd_def.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_soc.h \
  ../../../../../../modules/nrfx/drivers/nrfx_errors.h \
  ../../../../../../modules/nrfx/drivers/include/nrfx_twim.h \
  ../../../../../../modules/nrfx/drivers/include/nrfx_twi_twim.h \

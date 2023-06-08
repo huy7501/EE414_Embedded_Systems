@@ -1,5 +1,5 @@
 Output/Debug/Obj/twi_scanner_pca10056/app_timer.o: \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\timer\app_timer.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\timer\app_timer.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
@@ -30,7 +30,7 @@ Output/Debug/Obj/twi_scanner_pca10056/app_timer.o: \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/sdk_macros.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\components\libraries\timer\app_timer.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\timer\app_timer.h \
  ../../../../../../components/libraries/util/app_error.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdio.h \
  ../../../../../../components/libraries/util/app_error_weak.h \

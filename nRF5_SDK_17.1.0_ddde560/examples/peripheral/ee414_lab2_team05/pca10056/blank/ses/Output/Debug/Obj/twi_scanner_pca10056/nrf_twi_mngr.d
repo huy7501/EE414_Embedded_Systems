@@ -1,5 +1,5 @@
 Output/Debug/Obj/twi_scanner_pca10056/nrf_twi_mngr.o: \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\twi_mngr\nrf_twi_mngr.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\twi_mngr\nrf_twi_mngr.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
@@ -30,7 +30,7 @@ Output/Debug/Obj/twi_scanner_pca10056/nrf_twi_mngr.o: \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/sdk_macros.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\twi_mngr\nrf_twi_mngr.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\twi_mngr\nrf_twi_mngr.h \
  ../../../../../../integration/nrfx/legacy/nrf_drv_twi.h \
  ../../../../../../modules/nrfx/nrfx.h \
  ../../../../../../integration/nrfx/nrfx_config.h \

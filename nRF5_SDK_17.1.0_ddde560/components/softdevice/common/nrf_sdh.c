@@ -42,7 +42,7 @@
 #if NRF_MODULE_ENABLED(NRF_SDH)
 
 #include "nrf_sdh.h"
-
+#include "nrf_soc.h"
 #include <stdint.h>
 
 #include "nrf_sdm.h"

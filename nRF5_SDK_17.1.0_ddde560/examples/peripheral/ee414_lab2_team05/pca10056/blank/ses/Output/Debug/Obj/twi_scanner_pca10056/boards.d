@@ -1,6 +1,6 @@
 Output/Debug/Obj/twi_scanner_pca10056/boards.o: \
- C:\nRF5_SDK_17.1.0_ddde560\components\boards\boards.c \
- C:\nRF5_SDK_17.1.0_ddde560\components\boards\boards.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\boards\boards.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\boards\boards.h \
  ../../../../../../modules/nrfx/hal/nrf_gpio.h \
  ../../../../../../modules/nrfx/nrfx.h \
  ../../../../../../integration/nrfx/nrfx_config.h ../config/sdk_config.h \
@@ -47,4 +47,4 @@ Output/Debug/Obj/twi_scanner_pca10056/boards.o: \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/libraries/util/sdk_resources.h \
  ../../../../../../modules/nrfx/drivers/nrfx_errors.h \
- C:\nRF5_SDK_17.1.0_ddde560\components\boards\pca10056.h
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\boards\pca10056.h

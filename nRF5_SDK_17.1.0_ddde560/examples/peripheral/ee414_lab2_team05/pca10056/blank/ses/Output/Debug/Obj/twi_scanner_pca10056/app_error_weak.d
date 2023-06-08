@@ -1,6 +1,6 @@
 Output/Debug/Obj/twi_scanner_pca10056/app_error_weak.o: \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error_weak.c \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error_weak.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL_ConfDefaults.h \
@@ -20,10 +20,10 @@ Output/Debug/Obj/twi_scanner_pca10056/app_error_weak.o: \
  ../../../../../../modules/nrfx/mdk/nrf51_to_nrf52840.h \
  ../../../../../../modules/nrfx/mdk/nrf52_to_nrf52840.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\util\sdk_errors.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\sdk_errors.h \
  ../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_error.h \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\util\nordic_common.h \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error_weak.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\nordic_common.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error_weak.h \
  ../../../../../../components/libraries/log/nrf_log.h \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/string.h \
@@ -53,4 +53,4 @@ Output/Debug/Obj/twi_scanner_pca10056/app_error_weak.o: \
  ../../../../../../components/libraries/balloc/nrf_balloc.h \
  ../../../../../../components/libraries/util/app_util_platform.h \
  ../../../../../../components/libraries/util/app_error.h \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_util_platform.h
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_util_platform.h

@@ -1,5 +1,5 @@
 Output/Debug/Obj/twi_scanner_pca10056/nrf_queue.o: \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\queue\nrf_queue.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\queue\nrf_queue.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
@@ -30,7 +30,7 @@ Output/Debug/Obj/twi_scanner_pca10056/nrf_queue.o: \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/sdk_macros.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
- C:\nRF5_SDK_17.1.0_ddde560\components\libraries\queue\nrf_queue.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\components\libraries\queue\nrf_queue.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/libraries/util/app_util.h \

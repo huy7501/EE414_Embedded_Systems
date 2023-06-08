@@ -1,6 +1,6 @@
 Output/Debug/Obj/twi_scanner_pca10056/nrfx_atomic.o: \
- C:\nRF5_SDK_17.1.0_ddde560\modules\nrfx\soc\nrfx_atomic.c \
- C:\nRF5_SDK_17.1.0_ddde560\modules\nrfx\soc\nrfx_atomic.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\modules\nrfx\soc\nrfx_atomic.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\modules\nrfx\soc\nrfx_atomic.h \
  ../../../../../../modules/nrfx/nrfx.h \
  ../../../../../../integration/nrfx/nrfx_config.h ../config/sdk_config.h \
  ../../../../../../modules/nrfx/drivers/nrfx_common.h \
@@ -46,4 +46,4 @@ Output/Debug/Obj/twi_scanner_pca10056/nrfx_atomic.o: \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/libraries/util/sdk_resources.h \
  ../../../../../../modules/nrfx/drivers/nrfx_errors.h \
- C:\nRF5_SDK_17.1.0_ddde560\modules\nrfx\soc\nrfx_atomic_internal.h
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\modules\nrfx\soc\nrfx_atomic_internal.h

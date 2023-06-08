@@ -119,6 +119,16 @@ void ble_cts_c_on_db_disc_evt(ble_cts_c_t * p_cts, ble_db_discovery_evt_t * p_ev
         NRF_LOG_INFO("Current Time Service discovered at peer.");
 
         evt.evt_type    = BLE_CTS_C_EVT_DISCOVERY_COMPLETE;
+        if (p_cts->conn_handle != BLE_CONN_HANDLE_INVALID)
+        {
+            if((p_cts->char_handles.cts_cccd_handle == BLE_GATT_HANDLE_INVALID)&&
+               (p_cts->char_handles.cts_handle == BLE_GATT_HANDLE_INVALID))
+            {
+                p_cts->char_handles = evt.params.char_handles;
+            }
+        }
+
+        p_cts->evt_handler(p_cts, &evt);
     }
     else if ((p_evt->evt_type == BLE_DB_DISCOVERY_SRV_NOT_FOUND) ||
              (p_evt->evt_type == BLE_DB_DISCOVERY_ERROR))
@@ -303,6 +313,7 @@ static void current_time_read(ble_cts_c_t * p_cts, ble_evt_t const * p_ble_evt)
             else
             {
                 // Valid time reveiced.
+                NRF_LOG_INFO("Valid time received.");
                 evt.evt_type = BLE_CTS_C_EVT_CURRENT_TIME;
             }
         }

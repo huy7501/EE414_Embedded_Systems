@@ -79,7 +79,6 @@ void OLED_BLANK (nrf_twi_sensor_t const * p_instance){
   uint8_t data_sig = 0x40;
   uint8_t BLANK_SCREEN[128] = {};
   ret_code_t err_code;
-  
   for (uint8_t m =0; m<8; m++) {
     err_code = nrf_twi_sensor_reg_write(p_instance,
                                       command_slave_addr,

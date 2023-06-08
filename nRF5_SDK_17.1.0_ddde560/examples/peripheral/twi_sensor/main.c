@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2021, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -41,7 +41,7 @@
  * @defgroup tw_sensor_example main.c
  * @{
  * @ingroup nrf_twi_example
- * @brief TWI Sensor Example main file.
+ * @brief TWI lsm9ds1 Example main file.
  *
  * This file contains the source code for a sample application using TWI.
  *
@@ -59,78 +59,69 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+#include "lsm9ds1_reg.h"
+
 /* TWI instance ID. */
 #define TWI_INSTANCE_ID     0
+#define PIN_VDD_ENV 22  // 0<<5||22 for P0.22
+#define PIN_R_PULLUP 32
+/* // LSM9DS1 address for testing modul, uncomment if use test code
+#define LSM9DS1_IMU_ADD_L_7Bit    0x6BU // 01101011
+#define LSM9DS1_IMU_ADD_L         0xD5U // 11010101
+#define LSM9DS1_IMU_ADD_H_7Bit    0x6AU // 01101010
+#define LSM9DS1_IMU_ADD_H         0xD7U
 
-/* Common addresses definition for temperature sensor. */
-#define LM75B_ADDR          (0x90U >> 1)
 
-#define LM75B_REG_TEMP      0x00U
-#define LM75B_REG_CONF      0x01U
-#define LM75B_REG_THYST     0x02U
-#define LM75B_REG_TOS       0x03U
+#define LSM9DS1_MAG_ADD_L_7Bit    0x1EU
+#define LSM9DS1_MAG_ADD_L         0x3DU
+#define LSM9DS1_MAG_ADD_H_7Bit    0x1CU
+#define LSM9DS1_MAG_ADD_H         0x39U*/
 
-/* Mode for LM75B. */
-#define NORMAL_MODE 0U
-
-/* Indicates if operation on TWI has ended. */
-static volatile bool m_xfer_done = false;
+/* Private variables ---------------------------------------------------------*/
+static axis3bit16_t data_raw_acceleration;
+static axis3bit16_t data_raw_angular_rate;
+static axis3bit16_t data_raw_magnetic_field;
+static float acceleration_mg[3];
+static float angular_rate_mdps[3];
+static float magnetic_field_mgauss[3];
+static lsm9ds1_id_t whoamI;
+static lsm9ds1_status_t reg;
+static uint8_t rst;
+char tx_buffer[100];
+static float acc_calib[3];
 
 /* TWI instance. */
 static const nrf_drv_twi_t m_twi = NRF_DRV_TWI_INSTANCE(TWI_INSTANCE_ID);
+uint8_t register_address = 0x0F;    //Address of the who am i register to be read
 
-/* Buffer for samples read from temperature sensor. */
-static uint8_t m_sample;
+static lsm9ds1_id_t whoamI;
 
-/**
- * @brief Function for setting active mode on MMA7660 accelerometer.
- */
-void LM75B_set_mode(void)
-{
-    ret_code_t err_code;
-
-    /* Writing to LM75B_REG_CONF "0" set temperature sensor in NORMAL mode. */
-    uint8_t reg[2] = {LM75B_REG_CONF, NORMAL_MODE};
-    err_code = nrf_drv_twi_tx(&m_twi, LM75B_ADDR, reg, sizeof(reg), false);
-    APP_ERROR_CHECK(err_code);
-    while (m_xfer_done == false);
-
-    /* Writing to pointer byte. */
-    reg[0] = LM75B_REG_TEMP;
-    m_xfer_done = false;
-    err_code = nrf_drv_twi_tx(&m_twi, LM75B_ADDR, reg, 1, false);
-    APP_ERROR_CHECK(err_code);
-    while (m_xfer_done == false);
+static int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len){
+  uint8_t *i2c_address = handle;
+  ret_code_t err_code;
+  uint16_t reg16 = reg;
+  err_code = nrf_drv_twi_tx(&m_twi, *i2c_address, (uint8_t *)&reg16, 1, true);
+  if (NRF_SUCCESS != err_code){
+    return 0;
+  }
+  err_code = nrf_drv_twi_rx(&m_twi, *i2c_address, bufp, len); 
+  return 0;
 }
 
-/**
- * @brief Function for handling data from temperature sensor.
- *
- * @param[in] temp          Temperature in Celsius degrees read from sensor.
- */
-__STATIC_INLINE void data_handler(uint8_t temp)
-{
-    NRF_LOG_INFO("Temperature: %d Celsius degrees.", temp);
-}
-
-/**
- * @brief TWI events handler.
- */
-void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
-{
-    switch (p_event->type)
-    {
-        case NRF_DRV_TWI_EVT_DONE:
-            if (p_event->xfer_desc.type == NRF_DRV_TWI_XFER_RX)
-            {
-                data_handler(m_sample);
-            }
-            m_xfer_done = true;
-            break;
-        default:
-            break;
+static int32_t platform_write(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len){
+  uint8_t *i2c_address = handle;
+  ret_code_t err_code;
+  uint8_t buffer[1 + len];
+  memcpy(buffer, &reg, 1);
+  memcpy(buffer + 1, bufp, len);
+    err_code = nrf_drv_twi_tx(&m_twi, *i2c_address, buffer, len + 1, true);
+    if(err_code == NRF_SUCCESS){
+      NRF_LOG_INFO("Device Address and Register Address and Data sent");
     }
+    NRF_LOG_FLUSH();
+  return 0;
 }
+
 
 /**
  * @brief UART initialization.
@@ -139,56 +130,188 @@ void twi_init (void)
 {
     ret_code_t err_code;
 
-    const nrf_drv_twi_config_t twi_lm75b_config = {
-       .scl                = ARDUINO_SCL_PIN,
-       .sda                = ARDUINO_SDA_PIN,
+    const nrf_drv_twi_config_t twi_config = {
+       .scl                = ARDUINO_SCL1_PIN,
+       .sda                = ARDUINO_SDA1_PIN,
        .frequency          = NRF_DRV_TWI_FREQ_100K,
        .interrupt_priority = APP_IRQ_PRIORITY_HIGH,
        .clear_bus_init     = false
     };
 
-    err_code = nrf_drv_twi_init(&m_twi, &twi_lm75b_config, twi_handler, NULL);
+    err_code = nrf_drv_twi_init(&m_twi, &twi_config, NULL, NULL);
     APP_ERROR_CHECK(err_code);
 
     nrf_drv_twi_enable(&m_twi);
 }
 
-/**
- * @brief Function for reading data from temperature sensor.
- */
-static void read_sensor_data()
-{
-    m_xfer_done = false;
-
-    /* Read 1 byte from the specified address - skip 3 bits dedicated for fractional part of temperature. */
-    ret_code_t err_code = nrf_drv_twi_rx(&m_twi, LM75B_ADDR, &m_sample, sizeof(m_sample));
-    APP_ERROR_CHECK(err_code);
-}
 
 /**
  * @brief Function for main application entry.
  */
 int main(void)
 {
+    ret_code_t err_code;
+    uint8_t sample_data;
+    bool detected_device = false;
+    float acc_abs;
+    nrf_gpio_pin_set(PIN_VDD_ENV);
+    nrf_gpio_pin_set(PIN_R_PULLUP);
+
+    nrf_gpio_cfg(PIN_VDD_ENV, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_DISCONNECT,
+        NRF_GPIO_PIN_NOPULL, NRF_GPIO_PIN_S0H1, NRF_GPIO_PIN_NOSENSE);
+    nrf_gpio_cfg(PIN_R_PULLUP, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_DISCONNECT,
+        NRF_GPIO_PIN_NOPULL, NRF_GPIO_PIN_S0H1, NRF_GPIO_PIN_NOSENSE);
+    nrf_delay_ms(4);
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("\r\nTWI sensor example started.");
-    NRF_LOG_FLUSH();
+    //NRF_LOG_INFO("\r\nTWI device example started.\r\n");
+    //NRF_LOG_FLUSH();
+    NRF_LOG_INFO("\r\nTWI device example started.\r\n");
     twi_init();
-    LM75B_set_mode();
+
+    /*///*****Test code for testing module
+    //////*********************************************************************************** //
+    err_code = nrf_drv_twi_tx(&m_twi, LSM9DS1_IMU_ADD_H >> 1, &register_address, 1, true);
+    if(err_code == NRF_SUCCESS){
+      NRF_LOG_INFO("Device Address and Register Address sent");
+    }
+    NRF_LOG_FLUSH();
+
+    err_code = nrf_drv_twi_rx(&m_twi, LSM9DS1_IMU_ADD_H >> 1, &sample_data, sizeof(sample_data));
+    if (err_code == NRF_SUCCESS){
+      NRF_LOG_INFO("The Register read = 0x%x", sample_data);
+    }
+    NRF_LOG_FLUSH();
+///////////////////////////////////////////////////////////////////////////*/
+
+        /* Initialize platform specific hardware */
+    //platform_init();
+
+    /* Initialize inertial sensors (IMU) driver interface */
+    uint8_t i2c_add_mag = LSM9DS1_MAG_I2C_ADD_L >> 1;
+    lsm9ds1_ctx_t dev_ctx_mag;
+    dev_ctx_mag.write_reg = platform_write;
+    dev_ctx_mag.read_reg = platform_read;
+    dev_ctx_mag.handle = (void*)&i2c_add_mag;
+
+    /* Initialize magnetic sensors driver interface */
+    uint8_t i2c_add_imu = LSM9DS1_IMU_I2C_ADD_H >> 1;
+    lsm9ds1_ctx_t dev_ctx_imu;
+    dev_ctx_imu.write_reg = platform_write;
+    dev_ctx_imu.read_reg = platform_read;
+    dev_ctx_imu.handle = (void*)&i2c_add_imu;
+
+    /* Check device ID */
+    lsm9ds1_dev_id_get(&dev_ctx_mag, &dev_ctx_imu, &whoamI);
+    if (whoamI.imu != LSM9DS1_IMU_ID || whoamI.mag != LSM9DS1_MAG_ID){
+      while(0){
+        /* manage here device not found */
+        //NRF_LOG_INFO("\r\nCannot find the LSM9DS1.********\r\n");
+        //NRF_LOG_FLUSH();
+        NRF_LOG_INFO("\r\nCannot find the LSM9DS1.********\r\n");
+      }
+    }
+    NRF_LOG_INFO("Who am I register [IMU]: 0x%x [MAG]: 0x%x \r\n", whoamI.imu, whoamI.mag);   
+
+    /* Restore default configuration */
+    lsm9ds1_dev_reset_set(&dev_ctx_mag, &dev_ctx_imu, PROPERTY_ENABLE);
+    do {
+      lsm9ds1_dev_reset_get(&dev_ctx_mag, &dev_ctx_imu, &rst);
+    } while (rst);
+
+    /* Enable Block Data Update */
+    lsm9ds1_block_data_update_set(&dev_ctx_mag, &dev_ctx_imu, PROPERTY_ENABLE);
+
+    /* Set full scale */
+    lsm9ds1_xl_full_scale_set(&dev_ctx_imu, LSM9DS1_4g);
+    lsm9ds1_gy_full_scale_set(&dev_ctx_imu, LSM9DS1_2000dps);
+    lsm9ds1_mag_full_scale_set(&dev_ctx_mag, LSM9DS1_16Ga);
+
+    /* Configure filtering chain - See datasheet for filtering chain details */
+    /* Accelerometer filtering chain */
+    lsm9ds1_xl_filter_aalias_bandwidth_set(&dev_ctx_imu, LSM9DS1_AUTO);
+    lsm9ds1_xl_filter_lp_bandwidth_set(&dev_ctx_imu, LSM9DS1_LP_ODR_DIV_50);
+    lsm9ds1_xl_filter_out_path_set(&dev_ctx_imu, LSM9DS1_LP_OUT);
+    /* Gyroscope filtering chain */
+    lsm9ds1_gy_filter_lp_bandwidth_set(&dev_ctx_imu, LSM9DS1_LP_ULTRA_LIGHT);
+    lsm9ds1_gy_filter_hp_bandwidth_set(&dev_ctx_imu, LSM9DS1_HP_MEDIUM);
+    lsm9ds1_gy_filter_out_path_set(&dev_ctx_imu, LSM9DS1_LPF1_HPF_LPF2_OUT);
+
+    /* Set Output Data Rate / Power mode */
+    lsm9ds1_imu_data_rate_set(&dev_ctx_imu, LSM9DS1_IMU_59Hz5);
+    lsm9ds1_mag_data_rate_set(&dev_ctx_mag, LSM9DS1_MAG_UHP_10Hz);
+
+
 
     while (true)
     {
-        nrf_delay_ms(500);
+    // Calibration
+      int i = 0;
+      acc_calib[0] = acc_calib[1] = acc_calib[2] = 0.0;
+      while(i<10) {
+            /* Read device status register */
+        lsm9ds1_dev_status_get(&dev_ctx_mag, &dev_ctx_imu, &reg);
 
-        do
-        {
-            __WFE();
-        }while (m_xfer_done == false);
+        if ( reg.status_imu.xlda && reg.status_imu.gda ){
+          /* Read imu data */
+          memset(data_raw_acceleration.u8bit, 0x00, 3 * sizeof(int16_t));
+          memset(data_raw_angular_rate.u8bit, 0x00, 3 * sizeof(int16_t));
 
-        read_sensor_data();
-        NRF_LOG_FLUSH();
+          lsm9ds1_acceleration_raw_get(&dev_ctx_imu, data_raw_acceleration.u8bit);
+          lsm9ds1_angular_rate_raw_get(&dev_ctx_imu, data_raw_angular_rate.u8bit);
+
+          acceleration_mg[0] = lsm9ds1_from_fs4g_to_mg(data_raw_acceleration.i16bit[0]);
+          acceleration_mg[1] = lsm9ds1_from_fs4g_to_mg(data_raw_acceleration.i16bit[1]);
+          acceleration_mg[2] = lsm9ds1_from_fs4g_to_mg(data_raw_acceleration.i16bit[2]);
+          //acc_abs = acceleration_mg[0]*acceleration_mg[0]+acceleration_mg[1]*acceleration_mg[1]+acceleration_mg[2]*acceleration_mg[2];
+          acc_calib[0] += acceleration_mg[0];
+          acc_calib[1] += acceleration_mg[1];
+          acc_calib[2] += acceleration_mg[2];
+          i+=1;
+          //sprintf((char *)tx_buffer, "Moj IMU - mg[0]: %4.2f \r\n", acceleration_mg[0]);
+
+          //NRF_LOG_INFO(tx_buffer/*, strlen((char const*)tx_buffer)*/);
+          //NRF_LOG_INFO(tx_buffer);
+          //NRF_LOG_FLUSH();
+        }
+      }
+      acc_calib[0] = acc_calib[0]/10.0;
+      acc_calib[1] = acc_calib[1]/10.0;
+      acc_calib[2] = acc_calib[2]/10.0;
+      NRF_LOG_INFO("acc_calib: "NRF_LOG_FLOAT_MARKER"",
+        NRF_LOG_FLOAT(acc_calib[2]));
+      // Measure acc.deviation
+      i = 0;
+      while(i<=50) {
+            /* Read device status register */
+        lsm9ds1_dev_status_get(&dev_ctx_mag, &dev_ctx_imu, &reg);
+
+        if ( reg.status_imu.xlda && reg.status_imu.gda ){
+          /* Read imu data */
+          memset(data_raw_acceleration.u8bit, 0x00, 3 * sizeof(int16_t));
+          memset(data_raw_angular_rate.u8bit, 0x00, 3 * sizeof(int16_t));
+
+          lsm9ds1_acceleration_raw_get(&dev_ctx_imu, data_raw_acceleration.u8bit);
+          lsm9ds1_angular_rate_raw_get(&dev_ctx_imu, data_raw_angular_rate.u8bit);
+
+          acceleration_mg[0] = lsm9ds1_from_fs4g_to_mg(data_raw_acceleration.i16bit[0]);
+          acceleration_mg[1] = lsm9ds1_from_fs4g_to_mg(data_raw_acceleration.i16bit[1]);
+          acceleration_mg[2] = lsm9ds1_from_fs4g_to_mg(data_raw_acceleration.i16bit[2]);
+          
+          acceleration_mg[0] -= acc_calib[0];
+          acceleration_mg[1] -= acc_calib[1];
+          acceleration_mg[2] -= acc_calib[2];
+          acc_abs = acceleration_mg[0]*acceleration_mg[0]+acceleration_mg[1]*acceleration_mg[1]+acceleration_mg[2]*acceleration_mg[2];
+          NRF_LOG_INFO("IMU - [mg]: "NRF_LOG_FLOAT_MARKER"",
+                  NRF_LOG_FLOAT(acc_abs));
+          //sprintf((char *)tx_buffer, "Moj IMU - mg[0]: %4.2f \r\n", acceleration_mg[0]);
+          i+=1;
+          //NRF_LOG_INFO(tx_buffer/*, strlen((char const*)tx_buffer)*/);
+          //NRF_LOG_INFO(tx_buffer);
+          //NRF_LOG_FLUSH();
+        }
+      }
     }
 }
 

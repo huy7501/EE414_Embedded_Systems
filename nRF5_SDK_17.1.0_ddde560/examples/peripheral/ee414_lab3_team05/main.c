@@ -48,8 +48,6 @@
  */
 #include "main.h"
 
-
-
 static void lfclk_request(void)
 {
     ret_code_t err_code = nrf_drv_clock_init();
@@ -593,6 +591,48 @@ void sleep_timer_stop(void)
   else return;
 }
 
+////////////////////// LSM9DS1 //////////////////////
+static axis3bit16_t data_raw_acceleration;
+static axis3bit16_t data_raw_angular_rate;
+static axis3bit16_t data_raw_magnetic_field;
+static float acceleration_mg[3];
+static float angular_rate_mdps[3];
+static float magnetic_field_mgauss[3];
+static lsm9ds1_id_t whoamI;
+static lsm9ds1_status_t reg;
+static uint8_t rst;
+char tx_buffer[100];
+uint8_t register_address = 0x0F;
+//static lsm9ds1_id_t whoamI;
+
+static int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len){
+  uint8_t *i2c_address = handle;
+  ret_code_t err_code;
+  uint16_t reg16 = reg;
+  err_code = nrf_drv_twi_tx(&m_twi, *i2c_address, (uint8_t *)&reg16, 1, true);
+  if (NRF_SUCCESS != err_code){
+    return 0;
+  }
+  err_code = nrf_drv_twi_rx(&m_twi, *i2c_address, bufp, len); 
+  return 0;
+}
+
+static int32_t platform_write(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len){
+  uint8_t *i2c_address = handle;
+  ret_code_t err_code;
+  uint8_t buffer[1 + len];
+  memcpy(buffer, &reg, 1);
+  memcpy(buffer + 1, bufp, len);
+    err_code = nrf_drv_twi_tx(&m_twi, *i2c_address, buffer, len + 1, true);
+    if(err_code == NRF_SUCCESS){
+      NRF_LOG_INFO("Device Address and Register Address and Data sent");
+    }
+    NRF_LOG_FLUSH();
+  return 0;
+}
+
+/////////////////////////////////////////////////////
+
 int main(void){
   ret_code_t err_code;
   uint8_t address;
@@ -637,6 +677,63 @@ int main(void){
   APP_ERROR_CHECK(err_code);
   app_timer_start(m_timer_clock, APP_TIMER_TICKS(1000), &OLED_CLOCK_HANDLER);
   sleep_timer_reset();
+
+  ////////////////////// LSM9DS1 //////////////////////
+  uint8_t i2c_add_mag = LSM9DS1_MAG_I2C_ADD_L >> 1;
+  lsm9ds1_ctx_t dev_ctx_mag;
+  dev_ctx_mag.write_reg = platform_write;
+  dev_ctx_mag.read_reg = platform_read;
+  dev_ctx_mag.handle = (void*)&i2c_add_mag;
+
+  /* Initialize magnetic sensors driver interface */
+  uint8_t i2c_add_imu = LSM9DS1_IMU_I2C_ADD_H >> 1;
+  lsm9ds1_ctx_t dev_ctx_imu;
+  dev_ctx_imu.write_reg = platform_write;
+  dev_ctx_imu.read_reg = platform_read;
+  dev_ctx_imu.handle = (void*)&i2c_add_imu;
+
+  /* Check device ID */
+  lsm9ds1_dev_id_get(&dev_ctx_mag, &dev_ctx_imu, &whoamI);
+  nrf_delay_ms(10);
+  if (whoamI.imu != LSM9DS1_IMU_ID || whoamI.mag != LSM9DS1_MAG_ID){
+    while(1){
+      // manage here device not found
+      NRF_LOG_INFO("\r\nCannot find the LSM9DS1.********\r\n");
+      NRF_LOG_FLUSH();
+      //printf("\r\nCannot find the LSM9DS1.********\r\n");
+    }
+  }
+  //printf("Who am I register [IMU]: 0x%x [MAG]: 0x%x \r\n", whoamI.imu, whoamI.mag);   
+
+  /* Restore default configuration */
+  lsm9ds1_dev_reset_set(&dev_ctx_mag, &dev_ctx_imu, PROPERTY_ENABLE);
+  do {
+    lsm9ds1_dev_reset_get(&dev_ctx_mag, &dev_ctx_imu, &rst);
+  } while (rst);
+
+  /* Enable Block Data Update */
+  lsm9ds1_block_data_update_set(&dev_ctx_mag, &dev_ctx_imu, PROPERTY_ENABLE);
+
+  /* Set full scale */
+  lsm9ds1_xl_full_scale_set(&dev_ctx_imu, LSM9DS1_4g);
+  lsm9ds1_gy_full_scale_set(&dev_ctx_imu, LSM9DS1_2000dps);
+  lsm9ds1_mag_full_scale_set(&dev_ctx_mag, LSM9DS1_16Ga);
+
+  /* Configure filtering chain - See datasheet for filtering chain details */
+  /* Accelerometer filtering chain */
+  lsm9ds1_xl_filter_aalias_bandwidth_set(&dev_ctx_imu, LSM9DS1_AUTO);
+  lsm9ds1_xl_filter_lp_bandwidth_set(&dev_ctx_imu, LSM9DS1_LP_ODR_DIV_50);
+  lsm9ds1_xl_filter_out_path_set(&dev_ctx_imu, LSM9DS1_LP_OUT);
+  /* Gyroscope filtering chain */
+  lsm9ds1_gy_filter_lp_bandwidth_set(&dev_ctx_imu, LSM9DS1_LP_ULTRA_LIGHT);
+  lsm9ds1_gy_filter_hp_bandwidth_set(&dev_ctx_imu, LSM9DS1_HP_MEDIUM);
+  lsm9ds1_gy_filter_out_path_set(&dev_ctx_imu, LSM9DS1_LPF1_HPF_LPF2_OUT);
+
+  /* Set Output Data Rate / Power mode */
+  lsm9ds1_imu_data_rate_set(&dev_ctx_imu, LSM9DS1_IMU_59Hz5);
+  lsm9ds1_mag_data_rate_set(&dev_ctx_mag, LSM9DS1_MAG_UHP_10Hz);
+    ///////////////////////////////////////////////////////////////////
+
   while (true) {
     // do nothing
     //__WFI();
@@ -644,5 +741,54 @@ int main(void){
     nrf_delay_ms(100);
     NRF_LOG_INFO("PDATA = %d", sample_data);
     NRF_LOG_FLUSH();
+
+    lsm9ds1_dev_status_get(&dev_ctx_mag, &dev_ctx_imu, &reg);
+
+      if ( reg.status_imu.xlda && reg.status_imu.gda ){
+        /* Read imu data */
+        memset(data_raw_acceleration.u8bit, 0x00, 3 * sizeof(int16_t));
+        memset(data_raw_angular_rate.u8bit, 0x00, 3 * sizeof(int16_t));
+
+        lsm9ds1_acceleration_raw_get(&dev_ctx_imu, data_raw_acceleration.u8bit);
+        lsm9ds1_angular_rate_raw_get(&dev_ctx_imu, data_raw_angular_rate.u8bit);
+
+        acceleration_mg[0] = lsm9ds1_from_fs4g_to_mg(data_raw_acceleration.i16bit[0]);
+        acceleration_mg[1] = lsm9ds1_from_fs4g_to_mg(data_raw_acceleration.i16bit[1]);
+        acceleration_mg[2] = lsm9ds1_from_fs4g_to_mg(data_raw_acceleration.i16bit[2]);
+
+        angular_rate_mdps[0] = lsm9ds1_from_fs2000dps_to_mdps(data_raw_angular_rate.i16bit[0]);
+        angular_rate_mdps[1] = lsm9ds1_from_fs2000dps_to_mdps(data_raw_angular_rate.i16bit[1]);
+        angular_rate_mdps[2] = lsm9ds1_from_fs2000dps_to_mdps(data_raw_angular_rate.i16bit[2]);
+
+        //sprintf((char*)tx_buffer, "IMU - [mg]:%4.2f\t%4.2f\t%4.2f\t[mdps]:%4.2f\t%4.2f\t%4.2f\r\n",
+        //        acceleration_mg[0], acceleration_mg[1], acceleration_mg[2],
+        //        angular_rate_mdps[0], angular_rate_mdps[1], angular_rate_mdps[2]);
+        NRF_LOG_INFO("IMU - [mg]: %4.2f\t%4.2f\t%4.2f\t[mdps]:%4.2f\t%4.2f\t%4.2f\r\n",
+                acceleration_mg[0], acceleration_mg[1], acceleration_mg[2],
+                angular_rate_mdps[0], angular_rate_mdps[1], angular_rate_mdps[2]);
+        //printf(tx_buffer/*, strlen((char const*)tx_buffer)*/);
+        NRF_LOG_INFO(tx_buffer);
+        NRF_LOG_FLUSH();
+      }
+
+      if ( reg.status_mag.zyxda ){
+        /* Read magnetometer data */
+        memset(data_raw_magnetic_field.u8bit, 0x00, 3 * sizeof(int16_t));
+
+        lsm9ds1_magnetic_raw_get(&dev_ctx_mag, data_raw_magnetic_field.u8bit);
+
+        magnetic_field_mgauss[0] = lsm9ds1_from_fs16gauss_to_mG(data_raw_magnetic_field.i16bit[0]);
+        magnetic_field_mgauss[1] = lsm9ds1_from_fs16gauss_to_mG(data_raw_magnetic_field.i16bit[1]);
+        magnetic_field_mgauss[2] = lsm9ds1_from_fs16gauss_to_mG(data_raw_magnetic_field.i16bit[2]);
+
+        //sprintf(tx_buffer, "MAG - [mG]:%4.2f\t%4.2f\t%4.2f\r\n",
+        //        magnetic_field_mgauss[0], magnetic_field_mgauss[1], magnetic_field_mgauss[2]);
+        NRF_LOG_INFO("MAG - [mG]: %4.2f\t%4.2f\t%4.2f\r\n",
+                magnetic_field_mgauss[0], magnetic_field_mgauss[1], magnetic_field_mgauss[2]);
+
+        //printf(tx_buffer/*, strlen((char const*)tx_buffer)*/);
+        NRF_LOG_INFO(tx_buffer);
+        NRF_LOG_FLUSH();
+      }
   }
 }

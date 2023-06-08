@@ -1,15 +1,15 @@
 Output/Debug/Obj/twi_scanner_pca10056/oled_display.o: \
- C:\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\oled_display.c \
- C:\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\oled_display.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\oled_display.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\oled_display.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdio.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL_ConfDefaults.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL_Conf.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL_Arm_Conf.h \
- C:\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\logo.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\logo.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
- C:\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\clock.h \
- C:\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\nrf_font.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\clock.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab2_team05\pca10056\blank\ses\nrf_font.h \
  ../../../../../../components/libraries/twi_sensor/nrf_twi_sensor.h \
  ../../../../../../components/libraries/twi_mngr/nrf_twi_mngr.h \
  ../../../../../../integration/nrfx/legacy/nrf_drv_twi.h \

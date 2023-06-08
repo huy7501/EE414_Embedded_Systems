@@ -1,15 +1,15 @@
 Output/Debug/Obj/twi_scanner_pca10056/oled_display.o: \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab3_team05\pca10056\blank\ses\oled_display.c \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab3_team05\pca10056\blank\ses\oled_display.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab4_team05\pca10056\blank\ses\oled_display.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab4_team05\pca10056\blank\ses\oled_display.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdio.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL_ConfDefaults.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL_Conf.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL_Arm_Conf.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab3_team05\pca10056\blank\ses\logo.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab4_team05\pca10056\blank\ses\logo.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab3_team05\pca10056\blank\ses\clock.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab3_team05\pca10056\blank\ses\nrf_font.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab4_team05\pca10056\blank\ses\clock.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\examples\peripheral\ee414_lab4_team05\pca10056\blank\ses\nrf_font.h \
  ../../../../../../components/libraries/twi_sensor/nrf_twi_sensor.h \
  ../../../../../../components/libraries/twi_mngr/nrf_twi_mngr.h \
  ../../../../../../integration/nrfx/legacy/nrf_drv_twi.h \
@@ -40,17 +40,26 @@ Output/Debug/Obj/twi_scanner_pca10056/oled_display.o: \
  ../../../../../../components/libraries/util/app_util.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/nordic_common.h \
+ ../../../../../../components/softdevice/s140/headers/nrf52/nrf_mbr.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_svc.h \
  ../../../../../../components/libraries/util/nordic_common.h \
  ../../../../../../components/libraries/util/app_util_platform.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_soc.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_svc.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_error.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_error_soc.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_nvic.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
  ../../../../../../components/libraries/util/app_error.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
- ../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_error.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_error.h \
  ../../../../../../components/libraries/util/app_error_weak.h \
  ../../../../../../modules/nrfx/soc/nrfx_coredep.h \
  ../../../../../../modules/nrfx/soc/nrfx_atomic.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/libraries/util/sdk_resources.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_sd_def.h \
+ ../../../../../../components/softdevice/s140/headers/nrf_soc.h \
  ../../../../../../modules/nrfx/drivers/nrfx_errors.h \
  ../../../../../../modules/nrfx/drivers/include/nrfx_twim.h \
  ../../../../../../modules/nrfx/drivers/include/nrfx_twi_twim.h \

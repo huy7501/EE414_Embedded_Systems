@@ -16,14 +16,14 @@ void OLED_INIT(nrf_twi_sensor_t const * p_instance)
 {
   int err_code;
   bool flag = false;
-  text_array_old[0] = digit2text_array[digit_array[1]];
-  text_array_old[1] = digit2text_array[digit_array[5]];
+  text_array_old[0] = digit2text_array[digit_array[0]];
+  text_array_old[1] = digit2text_array[digit_array[1]];
   text_array_old[2] = digit2text_array[10];
-  text_array_old[3] = digit2text_array[digit_array[0]];
-  text_array_old[4] = digit2text_array[digit_array[2]];
+  text_array_old[3] = digit2text_array[digit_array[2]];
+  text_array_old[4] = digit2text_array[digit_array[3]];
   text_array_old[5] = digit2text_array[10];
-  text_array_old[6] = digit2text_array[digit_array[2]];
-  text_array_old[7] = digit2text_array[digit_array[8]];
+  text_array_old[6] = digit2text_array[digit_array[4]];
+  text_array_old[7] = digit2text_array[digit_array[5]];
     // Display off
     oled_command(SET_DISPLAY_OFF, p_instance);
 

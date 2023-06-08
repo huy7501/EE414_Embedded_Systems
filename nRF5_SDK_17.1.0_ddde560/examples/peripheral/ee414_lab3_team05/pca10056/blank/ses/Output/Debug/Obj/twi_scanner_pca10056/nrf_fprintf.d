@@ -1,5 +1,5 @@
 Output/Debug/Obj/twi_scanner_pca10056/nrf_fprintf.o: \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\external\fprintf\nrf_fprintf.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\external\fprintf\nrf_fprintf.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/__SEGGER_RTL.h \
@@ -32,5 +32,5 @@ Output/Debug/Obj/twi_scanner_pca10056/nrf_fprintf.o: \
  ../../../../../../components/libraries/util/nrf_assert.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.10a/include/stdarg.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\external\fprintf\nrf_fprintf_format.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\external\fprintf\nrf_fprintf.h
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\external\fprintf\nrf_fprintf_format.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\external\fprintf\nrf_fprintf.h

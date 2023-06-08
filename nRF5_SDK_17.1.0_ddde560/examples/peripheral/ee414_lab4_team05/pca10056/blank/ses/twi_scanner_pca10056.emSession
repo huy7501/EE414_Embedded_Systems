@@ -2,6 +2,9 @@
 <session>
  <Bookmarks/>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
+  <BreakpointListItem trigger="" line="1410" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../../main.c" useHWbreakpoint="false"/>
+  <BreakpointListItem trigger="" line="697" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../../main.c" useHWbreakpoint="false"/>
+  <BreakpointListItem trigger="" line="210" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../../../../../components/softdevice/common/nrf_sdh.c" useHWbreakpoint="false"/>
   <BreakpointListItem trigger="" line="166" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="4" filename="../../../../../../components/libraries/twi_sensor/nrf_twi_sensor.c" useHWbreakpoint="false"/>
   <Exceptions set="MemManage;UsageFault_Coprocessor;UsageFault_CheckingError;UsageFault_StateError;BusFault;ExceptionEntryReturnFault;HardFault"/>
  </Breakpoints>
@@ -62,13 +65,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="595" useTextEdit="1" folds0="150,189,214,221,241,263,271,279,287,300" path="../../../main.c" left="0" selected="1" top="467" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="99" useTextEdit="1" path="../../../../../../components/libraries/util/app_error_weak.c" left="0" top="75" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="923" useTextEdit="1" path="../../../../../../modules/nrfx/drivers/src/nrfx_gpiote.c" left="0" top="897" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="171" useTextEdit="1" path="../../../../../../modules/nrfx/soc/nrfx_coredep.h" left="0" top="140" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditRight" x="32" y="50" useTextEdit="1" path="main.h" left="0" top="21" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditRight" x="30" y="61" useTextEdit="1" openedFrom="C:/KOLEX Lab/Lab 3/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab3_team05/main.c" path="APDS9960.h" left="0" top="50" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditRight" x="17" y="10" useTextEdit="1" openedFrom="C:/KOLEX Lab/Lab 3/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab3_team05/main.c" path="oled_display.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="26" y="1374" useTextEdit="1" folds0="964,1028,1035,1055,1077,1085,1093,1101,1114" path="../../../main.c" left="0" selected="1" top="1280" codecName="Default"/>
  </Files>
- <EMStudioWindow activeProject="twi_scanner_pca10056" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="C:/nRF5_SDK_17.1.0_ddde560/modules/nrfx/mdk/ses_startup_nrf52840.s&#xa;D:/Segger Embedded Studio/RF5_SDK/nRF5_SDK_17.1.0_ddde560/examples/peripheral/twi_scanner/pca10056/blank/ses/Output/Debug/Obj/twi_scanner_pca10056/nrfx_twi.asm&#xa;C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 7.10a/source/thumb_crt0.s&#xa;D:/Segger Embedded Studio/RF5_SDK/nRF5_SDK_17.1.0_ddde560/examples/peripheral/twi_scanner/pca10056/blank/ses/Output/Debug/Obj/twi_scanner_pca10056/nrfx_twi.asm&#xa;F:/KAIST 9th term/EE414 Embedded Systems/Lab1/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/pca10056/blank/ses/oled_display.c&#xa;C:/Textbooks/Sem5/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/pca10056/blank/ses/oled_display.c" fileDialogInitialDirectory="C:/KOLEX Lab/Lab 3/nRF5_SDK_17.1.0_ddde560/components/libraries/twi_sensor" debugSearchPath="" autoConnectCapabilities="3711"/>
+ <EMStudioWindow activeProject="twi_scanner_pca10056" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="C:/nRF5_SDK_17.1.0_ddde560/modules/nrfx/mdk/ses_startup_nrf52840.s&#xa;D:/Segger Embedded Studio/RF5_SDK/nRF5_SDK_17.1.0_ddde560/examples/peripheral/twi_scanner/pca10056/blank/ses/Output/Debug/Obj/twi_scanner_pca10056/nrfx_twi.asm&#xa;C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 7.10a/source/thumb_crt0.s&#xa;D:/Segger Embedded Studio/RF5_SDK/nRF5_SDK_17.1.0_ddde560/examples/peripheral/twi_scanner/pca10056/blank/ses/Output/Debug/Obj/twi_scanner_pca10056/nrfx_twi.asm&#xa;F:/KAIST 9th term/EE414 Embedded Systems/Lab1/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/pca10056/blank/ses/oled_display.c&#xa;C:/Textbooks/Sem5/nRF5_SDK_17.1.0_ddde560/examples/peripheral/ee414_lab1_team05/pca10056/blank/ses/oled_display.c" fileDialogInitialDirectory="C:/EE414_Embedded_Systems/nRF5_SDK_17.1.0_ddde560/components/libraries/sortlist" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>

@@ -1,5 +1,5 @@
 Output/Debug/Obj/twi_scanner_pca10056/nrfx_uart.o: \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\modules\nrfx\drivers\src\nrfx_uart.c \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\modules\nrfx\drivers\src\nrfx_uart.c \
  ../../../../../../modules/nrfx/nrfx.h \
  ../../../../../../integration/nrfx/nrfx_config.h ../config/sdk_config.h \
  ../../../../../../modules/nrfx/drivers/nrfx_common.h \
@@ -47,7 +47,7 @@ Output/Debug/Obj/twi_scanner_pca10056/nrfx_uart.o: \
  ../../../../../../modules/nrfx/drivers/nrfx_errors.h \
  ../../../../../../modules/nrfx/drivers/include/nrfx_uart.h \
  ../../../../../../modules/nrfx/hal/nrf_uart.h \
- C:\KOLEX\ Lab\Lab\ 3\nRF5_SDK_17.1.0_ddde560\modules\nrfx\drivers\src\prs/nrfx_prs.h \
+ C:\EE414_Embedded_Systems\nRF5_SDK_17.1.0_ddde560\modules\nrfx\drivers\src\prs/nrfx_prs.h \
  ../../../../../../modules/nrfx/hal/nrf_gpio.h \
  ../../../../../../integration/nrfx/nrfx_log.h \
  ../../../../../../components/libraries/log/nrf_log.h \

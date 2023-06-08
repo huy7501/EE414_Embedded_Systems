@@ -47,7 +47,9 @@
 #include "app_config.h"
 #endif
 // <h> nRF_Drivers 
-
+#ifndef APP_TIMER_V2
+#define APP_TIMER_V2
+#endif
 // <e> NRF_CLOCK_ENABLED - nrf_drv_clock - CLOCK peripheral driver - legacy layer
 //==========================================================
 #ifndef NRF_CLOCK_ENABLED
@@ -4087,7 +4089,21 @@
 
 // </h> 
 //==========================================================
+#ifndef NRFX_RTC1_ENABLED
+#define NRFX_RTC1_ENABLED 1
+#endif
 
+#ifndef RTC1_ENABLED
+#define RTC1_ENABLED 1
+#endif
+
+#ifndef APP_TIMER_V2_RTC1_ENABLED
+#define APP_TIMER_V2_RTC1_ENABLED 1
+#endif
+
+#ifndef NRF_SORTLIST_ENABLED
+#define NRF_SORTLIST_ENABLED 1
+#endif
 // <<< end of configuration section >>>
 #endif //SDK_CONFIG_H
 
